@@ -21,12 +21,12 @@ export const api = createApi({
     }),
     endpoints: (builder) => ({
         restore: builder.query({  // builder.query creates an async function which makes a query to the api on the server
-            query: () => 'api/csrf/restore/'
+            query: () => '/api/csrf/restore/'
         }),
         // login endpoint
         login: builder.mutation({
             query: (credentials) => ({
-                url: 'api/2dFSZfDxBFn2/login',
+                url: '/api/2dFSZfDxBFn2/login',
                 method: 'POST',
                 body: JSON.stringify(credentials)
             })

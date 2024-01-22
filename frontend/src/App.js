@@ -6,10 +6,18 @@ import {
   Routes
 } from "react-router-dom";
 import './App.css';
+import { Home } from './components/Home/Home';
+import { LoginForm } from './components/Auth/LoginForm';
 
 function App() {
   return (
-    <div className="App">
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/2dFSZfDxBFn2/login" element={<LoginForm />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
