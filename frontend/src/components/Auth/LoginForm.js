@@ -5,7 +5,7 @@ import { useLoginMutation } from "../../redux/app/services/api";
 import { setUser } from "../../redux/features/auth/userSlice";
 
 export const LoginForm = () => {
-    const dispatch = useDispatch
+    const dispatch = useDispatch();
     // const [formState, setFormState] = useState({
     //     credential: "",
     //     password: "",
@@ -48,7 +48,7 @@ export const LoginForm = () => {
         }
 
         try {
-            const res = await login(formState).unwrap();
+            const res = await login(formState);
             const logUser = { user: res.user, token: res.token }
             dispatch(setUser(logUser));
             setCredentialError(null);
@@ -56,6 +56,7 @@ export const LoginForm = () => {
             navigate("/")
         } catch (error) {
             const data = await error?.data?.errors
+            console.log(error)
             if (data) {
                 data?.forEach((error) => {
                     switch (error) {
