@@ -49,11 +49,10 @@ export const LoginForm = () => {
 
         try {
             const res = await login(formState);
-            const logUser = { user: res.user, token: res.token }
-            dispatch(setUser(logUser));
-            setCredentialError(null);
-            setPasswordError(null);
-            navigate("/")
+            await dispatch(setUser({ user: res?.data.user, token: res?.data.token }));
+            await setCredentialError(null);
+            await setPasswordError(null);
+            await navigate("/")
         } catch (error) {
             const data = await error?.data?.errors
             console.log(error)

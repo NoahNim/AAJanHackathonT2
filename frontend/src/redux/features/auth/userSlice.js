@@ -8,21 +8,23 @@ const userSlice = createSlice({
     reducers: {
         setUser(
             state,
-            { payload: { user, token } }
+            action
         ) {
-            state.user = user
-            state.token = token
+            // let newState = {
+            //     user: action.payload.user,
+            //     token: action.payload.token
+            // }
+            // console.log(newState)
+            return action.payload
         },
         restoreUser(
             state,
-            { payload: { user, token } }
+            action
         ) {
-            state.user = user
-            state.token = token
+            return action.payload
         },
-        removeUser(state) {
-            state.user = null
-            state.token = null
+        removeUser(state, action) {
+            return action.payload
         }
     }
 })

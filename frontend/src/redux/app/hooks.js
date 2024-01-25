@@ -1,6 +1,4 @@
-
-
-export const getCSRFCookie = (name) => {
+export const getCookie = (name) => {
     if (name) {
         const cookieValue = document.cookie.split("; ").find((row) => row.startsWith(name))?.split('=')[1]
 
