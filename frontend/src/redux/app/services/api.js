@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getCSRFCookie } from '../hooks';
+import { getCookie } from '../hooks';
 
 
 // this is where the rtk query functions are created and passed from. RTK Query makes an async call to the route in the server
@@ -8,7 +8,7 @@ export const api = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: '/',
         prepareHeaders: async (headers, endpoints) => {
-            const authToken = getCSRFCookie("XSRF-TOKEN")
+            const authToken = getCookie("XSRF-TOKEN")
 
             if (authToken) {
                 headers.set('XSRF-TOKEN', authToken);
@@ -36,7 +36,7 @@ export const api = createApi({
             query: () => ({
                 url: '/api/2dFSZfDxBFn2/',
                 method: "DELETE",
-                'XSRF-TOKEN': getCSRFCookie('XSRF-TOKEN')
+                'XSRF-TOKEN': getCookie('XSRF-TOKEN')
             })
         }),
         // restore user
