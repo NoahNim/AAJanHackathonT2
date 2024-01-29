@@ -26,25 +26,44 @@ export const api = createApi({
         // login endpoint
         login: builder.mutation({
             query: (credentials) => ({
-                url: '/api/2dFSZfDxBFn2/login',
+                url: '/api/user/login',
                 method: 'POST',
                 body: JSON.stringify(credentials)
-            })
+            }),
+            transformResponse: (response, meta, arg) => response.data,
+            transformErrorResponse: (response, meta, arg) => response.status,
+            async onQueryStarted(
+                arg,
+                { dispatch, getState, queryFulfilled, requestId, extra, getCacheEntry }
+            ) { },
+            // The 2nd parameter is the destructured `MutationCacheLifecycleApi`
+            async onCacheEntryAdded(
+                arg,
+                {
+                    dispatch,
+                    getState,
+                    extra,
+                    requestId,
+                    cacheEntryRemoved,
+                    cacheDataLoaded,
+                    getCacheEntry,
+                }
+            ) { },
         }),
         // logout end point
-        logout: builder.query({
+        logout: builder.mutation({
             query: () => ({
-                url: '/api/2dFSZfDxBFn2/',
+                url: '/api/user/',
                 method: "DELETE",
                 'XSRF-TOKEN': getCookie('XSRF-TOKEN')
             })
         }),
         // restore user
-        restoreUser: builder.mutation({
-            query: () => ('/api/2dFSZfDxBFn2/')
+        User: builder.query({
+            query: () => ('/api/user/')
         }),
     })
 })
 
 
-export const { useLoginMutation, useRestoreQuery, useRestoreUserMutation, useLazyLogoutQuery } = api;
+export const { useLoginMutation, useRestoreQuery, useLogoutMutation } = api;

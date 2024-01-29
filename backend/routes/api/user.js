@@ -68,4 +68,18 @@ router.get(
     })
 );
 
+// Get user profile
+router.get(':id(\\d+)', asyncHandler(async (req, res) => {
+    const userId = req.params.id
+
+    const userData = await User.findAll({
+        where: {
+            id: parseInt(userId)
+        }
+    })
+
+    return res.json({ userData })
+})
+)
+
 module.exports = router;
