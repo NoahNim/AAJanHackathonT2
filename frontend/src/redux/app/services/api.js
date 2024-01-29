@@ -40,7 +40,7 @@ export const api = createApi({
             })
         }),
         // restore user
-        User: builder.query({
+        restoreUser: builder.query({
             query: () => ('/api/user/')
         }),
     })
