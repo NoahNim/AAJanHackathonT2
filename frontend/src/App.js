@@ -7,8 +7,6 @@ import {
 import './App.css';
 import { Home } from './components/Home/Home';
 import { LoginForm } from './components/Auth/LoginForm';
-import { restoreUser } from './redux/features/auth/userSlice';
-import { useRestoreUserMutation } from './redux/app/services/api';
 
 function App() {
 
