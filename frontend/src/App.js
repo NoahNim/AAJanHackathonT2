@@ -1,6 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import {
   BrowserRouter,
   Route,
@@ -13,7 +11,6 @@ import { restoreUser } from './redux/features/auth/userSlice';
 import { useRestoreUserMutation } from './redux/app/services/api';
 
 function App() {
-  const dispatch = useDispatch();
 
   return (
     <div>
