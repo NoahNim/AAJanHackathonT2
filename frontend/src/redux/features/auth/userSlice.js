@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { setCookie } from '../../app/hooks'
 
 const initialState = { user: null, token: null }
 
@@ -10,11 +11,7 @@ const userSlice = createSlice({
             state,
             action
         ) {
-            // let newState = {
-            //     user: action.payload.user,
-            //     token: action.payload.token
-            // }
-            // console.log(newState)
+            setCookie("user", JSON.stringify(action.payload.user), 5)
             return action.payload
         },
         restoreUser(

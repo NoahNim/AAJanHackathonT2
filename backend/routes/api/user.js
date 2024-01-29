@@ -35,8 +35,9 @@ router.post(
 
         const token = await setTokenCookie(res, user);
 
+
         return res.json({
-            user,
+            user: user.toSafeObject(),
             token
         });
     }),
@@ -60,8 +61,10 @@ router.get(
 
             const token = await setTokenCookie(res, user)
 
+            const safeUser = user.toSafeObject()
+
             return res.json({
-                user: user.toSafeObject(),
+                user: safeUser,
                 token: token,
             });
         } else return res.json({});
