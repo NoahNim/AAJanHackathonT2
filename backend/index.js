@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const routes = require('./routes/index.js');
 const sequelize = require('sequelize');
 
-const { environment } = require('./config');
+const { environment } = require('./config/index.js');
 const isProduction = environment === 'production';
 
 const app = express();
