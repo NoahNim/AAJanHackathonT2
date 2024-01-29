@@ -23,3 +23,5 @@ function App() {
 }
 
 export default App;
+
+// "proxy": "http://localhost:5000",
