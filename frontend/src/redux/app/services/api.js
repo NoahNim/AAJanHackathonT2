@@ -30,25 +30,6 @@ export const api = createApi({
                 method: 'POST',
                 body: JSON.stringify(credentials)
             }),
-            transformResponse: (response, meta, arg) => response.data,
-            transformErrorResponse: (response, meta, arg) => response.status,
-            async onQueryStarted(
-                arg,
-                { dispatch, getState, queryFulfilled, requestId, extra, getCacheEntry }
-            ) { },
-            // The 2nd parameter is the destructured `MutationCacheLifecycleApi`
-            async onCacheEntryAdded(
-                arg,
-                {
-                    dispatch,
-                    getState,
-                    extra,
-                    requestId,
-                    cacheEntryRemoved,
-                    cacheDataLoaded,
-                    getCacheEntry,
-                }
-            ) { },
         }),
         // logout end point
         logout: builder.mutation({
