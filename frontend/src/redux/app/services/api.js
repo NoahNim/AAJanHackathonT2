@@ -26,7 +26,7 @@ export const api = createApi({
         // login endpoint
         login: builder.mutation({
             query: (credentials) => ({
-                url: '/api/2dFSZfDxBFn2/login',
+                url: '/api/user/login',
                 method: 'POST',
                 body: JSON.stringify(credentials)
             })
@@ -34,17 +34,17 @@ export const api = createApi({
         // logout end point
         logout: builder.query({
             query: () => ({
-                url: '/api/2dFSZfDxBFn2/',
+                url: '/api/user/',
                 method: "DELETE",
                 'XSRF-TOKEN': getCookie('XSRF-TOKEN')
             })
         }),
         // restore user
-        restoreUser: builder.mutation({
-            query: () => ('/api/2dFSZfDxBFn2/')
+        getUser: builder.mutation({
+            query: () => ('/api/user/')
         }),
     })
 })
 
 
-export const { useLoginMutation, useRestoreQuery, useRestoreUserMutation, useLazyLogoutQuery } = api;
+export const { useLoginMutation, useRestoreQuery, useGetUserMutation, useLazyLogoutQuery } = api;
