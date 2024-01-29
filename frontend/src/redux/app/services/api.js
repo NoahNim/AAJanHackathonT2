@@ -29,10 +29,29 @@ export const api = createApi({
                 url: '/api/user/login',
                 method: 'POST',
                 body: JSON.stringify(credentials)
-            })
+            }),
+            transformResponse: (response, meta, arg) => response.data,
+            transformErrorResponse: (response, meta, arg) => response.status,
+            async onQueryStarted(
+                arg,
+                { dispatch, getState, queryFulfilled, requestId, extra, getCacheEntry }
+            ) { },
+            // The 2nd parameter is the destructured `MutationCacheLifecycleApi`
+            async onCacheEntryAdded(
+                arg,
+                {
+                    dispatch,
+                    getState,
+                    extra,
+                    requestId,
+                    cacheEntryRemoved,
+                    cacheDataLoaded,
+                    getCacheEntry,
+                }
+            ) { },
         }),
         // logout end point
-        logout: builder.query({
+        logout: builder.mutation({
             query: () => ({
                 url: '/api/user/',
                 method: "DELETE",
@@ -40,11 +59,11 @@ export const api = createApi({
             })
         }),
         // restore user
-        getUser: builder.mutation({
+        User: builder.query({
             query: () => ('/api/user/')
         }),
     })
 })
 
 
-export const { useLoginMutation, useRestoreQuery, useGetUserMutation, useLazyLogoutQuery } = api;
+export const { useLoginMutation, useRestoreQuery, useLogoutMutation } = api;
