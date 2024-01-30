@@ -1,29 +1,14 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../redux/app/services/api";
-import { setUser } from "../../redux/features/auth/userSlice";
 
 export const LoginForm = () => {
-    const dispatch = useDispatch();
-    // const [formState, setFormState] = useState({
-    //     credential: "",
-    //     password: "",
-    // })
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("")
     const [login, { isError }] = useLoginMutation();
     const [credentialError, setCredentialError] = useState(null);
     const [passwordError, setPasswordError] = useState(null);
     const navigate = useNavigate();
-
-    // const changeHandler = (e) => {
-    //     console.log(formState)
-    //     setFormState({
-    //         ...formState,
-    //         [e?.target?.name]: e?.target?.value
-    //     })
-    // }
 
     const usernameChangeHandler = (e) => {
         e.preventDefault();
@@ -49,7 +34,6 @@ export const LoginForm = () => {
 
         try {
             const res = await login(formState);
-            await dispatch(setUser({ user: res?.data.user, token: res?.data.token }));
             await setCredentialError(null);
             await setPasswordError(null);
             await navigate("/")

@@ -1,6 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import {
   BrowserRouter,
   Route,
@@ -9,18 +7,15 @@ import {
 import './App.css';
 import { Home } from './components/Home/Home';
 import { LoginForm } from './components/Auth/LoginForm';
-import { restoreUser } from './redux/features/auth/userSlice';
-import { useRestoreUserMutation } from './redux/app/services/api';
 
 function App() {
-  const dispatch = useDispatch();
 
   return (
     <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/2dFSZfDxBFn2/login" element={<LoginForm />} />
+          <Route path="/user/login" element={<LoginForm />} />
         </Routes>
       </BrowserRouter>
     </div>
@@ -28,3 +23,5 @@ function App() {
 }
 
 export default App;
+
+// "proxy": "http://localhost:5000",
