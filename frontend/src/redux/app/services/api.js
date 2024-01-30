@@ -8,10 +8,10 @@ export const api = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: '/',
         prepareHeaders: async (headers, endpoints) => {
-            const authToken = getCookie("XSRF-TOKEN")
+            const siteToken = getCookie("XSRF-TOKEN")
 
-            if (authToken) {
-                headers.set('XSRF-TOKEN', authToken);
+            if (siteToken) {
+                headers.set('XSRF-TOKEN', siteToken);
             }
 
             headers.set('Content-type', 'application/json')
@@ -35,8 +35,7 @@ export const api = createApi({
         logout: builder.mutation({
             query: () => ({
                 url: '/api/user/',
-                method: "DELETE",
-                'XSRF-TOKEN': getCookie('XSRF-TOKEN')
+                method: 'DELETE',
             })
         }),
         // restore user

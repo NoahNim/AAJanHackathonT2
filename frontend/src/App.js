@@ -22,8 +22,6 @@ function App() {
     if (storedUser !== undefined) {
       const parsedUser = JSON.parse(storedUser);
 
-      console.log(parsedUser)
-
       const res = store.dispatch(api.endpoints.restoreUser.initiate(parsedUser)).unwrap()
       res.then((res) => {
         const user = { user: res.user, token: res.token }

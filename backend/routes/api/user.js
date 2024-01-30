@@ -43,10 +43,13 @@ router.post(
     }),
 );
 
+// 
+
 router.delete(
     '/',
     (_req, res) => {
         res.clearCookie('token');
+        res.clearCookie('user');
         return res.json({ message: 'success' });
     }
 );
