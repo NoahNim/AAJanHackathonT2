@@ -47,66 +47,247 @@ blog_likes
 comment_likes
 read_later
 
-* `/user`
-    * `GET /user`
-    * `GET /user/{userId}`
-        * Purpose: Get User by user ID
+* `/api/user`
+    * `GET /`
+        * Purpose: Get logged in user
         * Body: None
         * Return:
             ```json
             {
-                'firstName': 'Test',
-                'lastName': 'User',
-                'userName': 'Demo',
-                'email': 'testing@gmail.com',
-                'hashedPassword': 'randomPasswordHashed',
-                'profilePicture': 'imgString.jpg',
-                'bio': 'Bio description text'
+                "firstName": "Test",
+                "lastName": "User",
+                "userName": "Demo",
+                "email": "testing@gmail.com",
+                "profilePicture": "imgString.jpg",
+                "bio": "Bio description text"
             }
-    * `POST /user`
+
+    * `GET /{userId}`
+        * Purpose: Get User by userID
+        * Body: None
+        * Return:
+            ```json
+            {
+                "firstName": "Test",
+                "lastName": "User",
+                "userName": "Demo",
+                "email": "testing@gmail.com",
+                "profilePicture": "imgString.jpg",
+                "bio": "Bio description text"
+            }
+
+    * `POST /signup`
         * Purpose: Create a new User
         * Body: 
             ```json
             {
-                'firstName': 'Test',
-                'lastName': 'User',
-                'userName': 'Demo',
-                'email': 'testing@gmail.com',
-                'hashedPassword': 'randomPasswordHashed',
-                'profilePicture': 'imgString.jpg',
-                'bio': 'Bio description text'
+                "credential": "testing@gmail.com",
+                "password": "randomHashedPassword"
             }
         * Return:
             ```json
             {
-                'id': 1, 
-                'firstName': 'Test',
-                'lastName': 'User',
-                'userName': 'Demo',
-                'email': 'testing@gmail.com',
-                'profilePicture': 'imgString.jpg',
-                'bio': 'Bio description text'
+                "id": 1, 
+                "firstName": "Test",
+                "lastName": "User",
+                "userName": "Demo",
+                "email": "testing@gmail.com",
+                "profilePicture": "imgString.jpg",
+                "bio": "Bio description text"
+            }
+    
+    * `POST /login`
+        * Purpose: Create a new User
+        * Body: 
+            ```json
+            {
+                "firstName": "Test",
+                "lastName": "User",
+                "userName": "Demo",
+                "email": "testing@gmail.com",
+                "password": "randomHashedPassword",
+                "profilePicture": "imgString.jpg",
+                "bio": "Bio description text"
+            }
+        * Return:
+            ```json
+            {
+                "id": 1, 
+                "firstName": "Test",
+                "lastName": "User",
+                "userName": "Demo",
+                "email": "testing@gmail.com",
+                "profilePicture": "imgString.jpg",
+                "bio": "Bio description text"
             }
 
-    * `PUT /user/{userId}`
-        * Purpose: Update a User profile information
+    * `PUT /{userId}`
+        * Purpose: Update a User profile information by userId
         * Body:
             ```json
             {
-                'id': 1
+                "firstName": "...",
+                "lastName": "...",
+                "userName": "...",
+                "email": "...",
+                "profilePicture": "...",
+                "bio": "..."
             }
 
         * Return:
+            ```json
+            {
+                "id": 1, 
+                "firstName": "...",
+                "lastName": "...",
+                "userName": "...",
+                "email": "...",
+                "profilePicture": "...",
+                "bio": "..."
+            }
 
-    * `DELETE /user/{userId}`
+    * `DELETE /logout`
+        * Purpose: Logout a User
+        * Body: None
+        * Return: `{"message": "Successfully Logged out!"}`
+
+    * `DELETE /{userId}`
         * Purpose: Delete a User
         * Body:
             ```json
             {
-                'id': '1'
-                'hashedPassword': 'randomPasswordHashed'
+                "password": "randomHashedPassword"
             }
-        * Return: `{'message': 'Successfully deleted!'}`
+        * Return: `{"message": "Successfully deleted!"}`
+
+* `/api/blog`
+    * `GET /all`
+        * Purpose: Get all blogs for splash page
+        * Body: None
+        * Return:
+            ```json
+            [{
+                "title": "How i lived to 100 years",
+                "user": {
+                    "firstName": "Test",
+                    "lastName": "User"
+                    },
+                "thumbnail": "img.jpg",
+                "commentCount": 20,
+                "likeCount": 55
+            },
+            ...]
+
+    * `GET /{blogId}`
+        * Purpose: Get single blog by blogID
+        * Body: None
+        * Return:
+            ```json
+            {
+                "title": "How i lived to 100 years",
+                "description": "Description content",
+                "thumbnail": "img.jpg",
+                "user": {
+                    "firstName": "Test",
+                    "lastName": "User"
+                    },
+                "comments": [{
+                    "id": 1,
+                    "comment": "I love this blog",
+                    "likeCount": 10
+                }],
+                "likeCount": 55
+            }
+
+    * `POST /`
+        * Purpose: Create a new Blog post
+        * Body:
+            ```json
+            {
+                "title": "New Blog Post Title",
+                "description": "Content .....",
+                "pictures": ["img1.jpg", "img2.jpg","img3.jpg"],
+                "tags": ["future", "trending"]
+            }
+        * Return:
+            ```json
+            {
+                "id" : 1,
+                "title": "New Blog Post Title",
+                "description": "Content .....",
+                "pictures": ["img1.jpg", "img2.jpg","img3.jpg"],
+                "tags": ["future", "trending"]
+            }
+
+    * `PUT /{blogID}`
+        * Purpose: Create a new Blog post
+        * Body:
+            ```json
+            {
+                "title": "...",
+                "description": "...",
+                "pictures": [...],
+                "tags": [...]
+            }
+        * Return:
+            ```json
+            {
+                "id" : 1,
+                "title": "...",
+                "description": "...",
+                "pictures": [...],
+                "tags": [...]
+            }
+
+    * `DELETE /{blogId}`
+        * Purpose: Delete a blog
+        * Body: None
+        * Return: `{"message": "Successfully deleted the blog!"}`
+
+* `/api/comment`
+    * `GET /{blogId}`
+        * Purpose: Get all comments for a blog
+        * Body: None
+        * Return:
+            ```json
+            [{
+                "comment": "message",
+                "user": {
+                    "firstName": "first",
+                    "lastName": "last"
+                },
+                "likeCount": 2
+            }, ...]
+
+    * `POST /`
+        * Purpose: Create new comment on a blog
+        * Body: 
+            ```json
+            {
+                "blogId": 1,
+                "userId": 1,
+                "comment": "random comment"
+            }
+    
+    * `PUT /{commentId}`
+        * Purpose: Edit a comment
+        * Body:
+            ```json
+            {
+                "comment": "updated comment"
+            }
+        * Return:
+            ```json
+            {
+                "blogId": 1,
+                "userId": 1,
+                "comment": "updated comment"
+            }
+
+    * `DELETE /{blogId}`
+        * Purpose: Delete a comment
+        * Body: None
+        * Return: `{"message": "Successfully deleted the comment!"}`
 
 ## Learn More
 
