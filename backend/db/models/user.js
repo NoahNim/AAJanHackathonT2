@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
 
 
     toSafeObject = function () { // remember, this cannot be an arrow function
-      const { id, username } = this; // context will be the User instance
-      return { id, username };
+      const { id, username, email, firstName, lastName, profilePicture, bio } = this; // context will be the User instance
+      return { id, username, email, firstName, lastName, profilePicture, bio };
     };
 
 
@@ -43,8 +43,8 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
-      User.hasMany(models.Comment, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true})
-      User.hasMany(models.Blog, { foreignKey: 'ownerId', onDelete: 'CASCADE', hooks: true})
+      User.hasMany(models.Comment, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true })
+      User.hasMany(models.Blog, { foreignKey: 'ownerId', onDelete: 'CASCADE', hooks: true })
     }
   }
   User.init({
