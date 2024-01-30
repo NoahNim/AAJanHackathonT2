@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../redux/app/services/api";
+import { setUser } from "../../redux/features/auth/userSlice";
 
 export const LoginForm = () => {
+    const dispatch = useDispatch();
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("")
-    const [login, { isError }] = useLoginMutation();
+    const [login] = useLoginMutation();
     const [credentialError, setCredentialError] = useState(null);
     const [passwordError, setPasswordError] = useState(null);
     const navigate = useNavigate();
@@ -34,6 +37,7 @@ export const LoginForm = () => {
 
         try {
             const res = await login(formState);
+            await dispatch(setUser({ user: res?.data.user, token: res?.data.token }));
             await setCredentialError(null);
             await setPasswordError(null);
             await navigate("/")
