@@ -39,6 +39,75 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
+## API Routes
+user
+blog
+comment
+blog_likes
+comment_likes
+read_later
+
+* `/user`
+    * `GET /user`
+    * `GET /user/{userId}`
+        * Purpose: Get User by user ID
+        * Body: None
+        * Return:
+            ```json
+            {
+                'firstName': 'Test',
+                'lastName': 'User',
+                'userName': 'Demo',
+                'email': 'testing@gmail.com',
+                'hashedPassword': 'randomPasswordHashed',
+                'profilePicture': 'imgString.jpg',
+                'bio': 'Bio description text'
+            }
+    * `POST /user`
+        * Purpose: Create a new User
+        * Body: 
+            ```json
+            {
+                'firstName': 'Test',
+                'lastName': 'User',
+                'userName': 'Demo',
+                'email': 'testing@gmail.com',
+                'hashedPassword': 'randomPasswordHashed',
+                'profilePicture': 'imgString.jpg',
+                'bio': 'Bio description text'
+            }
+        * Return:
+            ```json
+            {
+                'id': 1, 
+                'firstName': 'Test',
+                'lastName': 'User',
+                'userName': 'Demo',
+                'email': 'testing@gmail.com',
+                'profilePicture': 'imgString.jpg',
+                'bio': 'Bio description text'
+            }
+
+    * `PUT /user/{userId}`
+        * Purpose: Update a User profile information
+        * Body:
+            ```json
+            {
+                'id': 1
+            }
+
+        * Return:
+
+    * `DELETE /user/{userId}`
+        * Purpose: Delete a User
+        * Body:
+            ```json
+            {
+                'id': '1'
+                'hashedPassword': 'randomPasswordHashed'
+            }
+        * Return: `{'message': 'Successfully deleted!'}`
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
