@@ -123,7 +123,7 @@ router.get(
 );
 
 // Get user profile
-router.get(':id(\\d+)', asyncHandler(async (req, res) => {
+router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     const userId = req.params.id
 
     const userData = await User.findAll({
