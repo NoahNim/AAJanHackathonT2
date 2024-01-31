@@ -81,8 +81,9 @@ router.post(
         console.log("_csrf:" + req.csrfToken())
         let user;
         const { username, email, password, firstName, lastName, bio, profilePicture } = req.body
+        console.log("body " + req.body)
         user = await User.signup({ username, email, password, firstName, lastName, bio, profilePicture })
-
+        console.log("user " + user)
         const token = await setTokenCookie(res, user);
 
         return res.json({
