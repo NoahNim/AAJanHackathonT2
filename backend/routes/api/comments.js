@@ -46,4 +46,16 @@ try{
     res.status(500).send(error.message)
 }
 })
-module.exports = router;
+
+router.post('/', async (req,res) =>{
+    try{
+         const { blogId, userId, comment } = req.body;
+         const newComment = await Comment.create({ blogId, userId, text: comment });
+         res.status(201).json(newComment);
+         
+
+    }catch(error){
+        res.status(500).send(error.message)
+    }
+})
+
