@@ -13,6 +13,7 @@ import { api } from './redux/app/services/api';
 import { store } from './redux/app/store';
 import { restoreUser } from './redux/features/auth/userSlice';
 import { getCookie } from './redux/app/hooks';
+import { Likes } from './components/TestComponent/likes';
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/user/login" element={<LoginForm />} />
+          <Route path="/test" element={<Likes />} />
         </Routes>
       </BrowserRouter>
     </div>
