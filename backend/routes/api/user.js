@@ -16,6 +16,36 @@ const validateLogin = [
     handleValidationErrors,
 ];
 
+const validateSignup = [
+    check('email')
+        .exists({ checkFalsy: true })
+        .isEmail()
+        .withMessage('Please provide a valid email.')
+        .isLength({ max: 100 })
+    ,
+    check('username')
+        .exists({ checkFalsy: true })
+        .isLength({ min: 4, max: 30 })
+        .withMessage('Please provide an unused username with at least 4 characters but less than 30 characters.'),
+    check('username')
+        .not()
+        .isEmail()
+        .withMessage('Username cannot be an email.'),
+    check('username')
+        .custom(value => {
+            return User.findOne({ where: { username: value } }).then((user) => {
+                if (user) {
+                    return Promise.reject('Please provide an unused username with at least 4 characters but less than 30 characters.')
+                }
+            })
+        }),
+    check('password')
+        .exists({ checkFalsy: true })
+        .isLength({ min: 6 })
+        .withMessage('Password must be 6 characters or more.'),
+    handleValidationErrors,
+];
+
 //Log in
 router.post(
     '/login',
@@ -43,7 +73,25 @@ router.post(
     }),
 );
 
-// 
+// Sign up user
+router.post(
+    '/sign-up',
+    validateSignup,
+    asyncHandler(async (req, res) => {
+        let user;
+        const { username, email, password, firstName, lastName, bio, profilePicture } = req.body
+        user = await User.signup({ username, email, password, firstName, lastName, bio, profilePicture })
+
+        const token = await setTokenCookie(req, user);
+
+        return res.json({
+            user,
+            token
+        })
+    })
+)
+
+// Log out of user
 
 router.delete(
     '/',
