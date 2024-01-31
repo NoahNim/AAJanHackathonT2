@@ -24,6 +24,7 @@ export const api = createApi({
             query: () => '/api/csrf/restore/'
         }),
         // login endpoint
+        // use mutation when state is being changed on the server
         login: builder.mutation({
             query: (credentials) => ({
                 url: '/api/user/login',
@@ -46,6 +47,7 @@ export const api = createApi({
             })
         }),
         // restore user
+        // use query when just retrieving data
         restoreUser: builder.query({
             query: () => ('/api/user/')
         }),

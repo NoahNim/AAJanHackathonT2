@@ -13,7 +13,7 @@ export const SignupForm = () => {
     const [email, setEmail] = useState("");
     const [bio, setBio] = useState("");
     const [profilePicture, setProfilePicture] = useState("")
-    const [signup] = useSignupMutation();
+    const [signup] = useSignupMutation(); // create a signup hook that uses the sign up mutation function
     const [usernameError, setUsernameError] = useState(null);
     const [passwordError, setPasswordError] = useState(null);
     const navigate = useNavigate();
@@ -73,7 +73,7 @@ export const SignupForm = () => {
         }
 
         try {
-            const res = await signup(formState);
+            const res = await signup(formState); // pass the form inputs to the signup hook
             await dispatch(setUser({ user: res?.data.user, token: res?.data.token }));
             await setUsernameError(null);
             await setPasswordError(null);
