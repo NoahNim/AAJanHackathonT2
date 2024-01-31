@@ -80,5 +80,20 @@ router.put('/:id', async (req, res) =>{
 
 })
 
+router.delete('/id', async (req, res) => {
+    try {
+        const commentId = req.params.id;
+
+        const deleted = await Comment.destroy({ where: { id: commentId } });
+
+        if (!deleted) {
+            return res.status(404).json({ message: "Comment not found" });
+        }
+
+        res.status(204).send(); // 204 No Content
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 
 module.exports = router;
