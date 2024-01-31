@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Blog extends Model {
     /**
@@ -11,37 +9,74 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Blog.belongsTo(models.User, { foreignKey: 'ownerId' })
-      Blog.hasMany(models.Comment, { foreignKey: 'blogId', onDelete: 'CASCADE', hooks: true})
-
+      Blog.belongsTo(models.User, { foreignKey: "ownerId" });
+      Blog.hasMany(models.Comment, {
+        foreignKey: "blogId",
+        onDelete: "CASCADE",
+        hooks: true,
+      });
     }
   }
-  Blog.init({
-        title: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-            validate: {
-                len: [1,40]
-            }
+  Blog.init(
+    {
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      title: {
+        type: DataTypes.STRING,
+        validate: {
+          len: [5, 60],
         },
-        text: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-            validate: {
-                len: [1,1000]
-            }
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.TEXT,
+        validate: {
+          len: [5, 2000],
         },
-        ownerId: {
-            type: DataTypes.INTEGER
-        }
-  }, {
-    sequelize,
-    modelName: 'Blog',
-    defaultScope: {
-      attributes: {
-        exclude: ["createdAt", "updatedAt"]
-      }
+        allowNull: false,
+      },
+      tags: {
+        type: DataTypes.ENUM(
+          "Personal",
+          "Lifestyle",
+          "Travel",
+          "Fashion",
+          "Food",
+          "Parenting",
+          "Fitness",
+          "Technology",
+          "Finance",
+          "DIY",
+          "Craft",
+          "Book",
+          "Movie",
+          "TV Review",
+          "Career",
+          "Professional Development",
+          "Environmental",
+          "Sustainability",
+          "Photography",
+          "Political",
+          "Social Commentary"
+        ),
+        allowNull: false,
+      },
+      pictures: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: "Blog",
+      defaultScope: {
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      },
     }
-  });
+  );
   return Blog;
 };
