@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSignupMutation } from "../../redux/app/services/api";
 import { setUser } from "../../redux/features/auth/userSlice";
 
-export const LoginForm = () => {
+export const SignupForm = () => {
     const dispatch = useDispatch();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -14,7 +14,7 @@ export const LoginForm = () => {
     const [bio, setBio] = useState("");
     const [profilePicture, setProfilePicture] = useState("")
     const [signup] = useSignupMutation();
-    const [usernameError, setusernameError] = useState(null);
+    const [usernameError, setUsernameError] = useState(null);
     const [passwordError, setPasswordError] = useState(null);
     const navigate = useNavigate();
 
@@ -30,14 +30,46 @@ export const LoginForm = () => {
         setPassword(e.target.value)
     }
 
+    const emailChangeHandler = (e) => {
+        e.preventDefault();
+
+        setEmail(e.target.value)
+    }
+
+    const firstNameChangeHandler = (e) => {
+        e.preventDefault();
+
+        setFirstName(e.target.value)
+    }
+
+    const lastNameChangeHandler = (e) => {
+        e.preventDefault();
+
+        setLastName(e.target.value)
+    }
+
+    const bioChangeHandler = (e) => {
+        e.preventDefault();
+
+        setBio(e.target.value)
+    }
+
+    const profilePictureChangeHandler = (e) => {
+        e.preventDefault();
+
+        setProfilePicture(e.target.value)
+    }
+
     const signupSubmitFunction = async (e) => {
         e.preventDefault();
 
-        // console.log(formState)
-
         const formState = {
             username,
-            password
+            password,
+            email,
+            firstName,
+            lastName,
+            bio,
         }
 
         try {
@@ -57,7 +89,7 @@ export const LoginForm = () => {
                             setPasswordError(error);
                             break;
                         case "Please provide a valid username.":
-                            setusernameError(error);
+                            setUsernameError(error);
                             break;
                         case "Please provide a valid password.":
                             setPasswordError(error)
@@ -72,7 +104,7 @@ export const LoginForm = () => {
 
     return (
         <div>
-            <form onSubmit={loginSubmitFunction}>
+            <form onSubmit={signupSubmitFunction}>
                 <h2>{
                     usernameError ? <>{usernameError}</> : null
                 }</h2>
@@ -97,7 +129,40 @@ export const LoginForm = () => {
                     onChange={(e) => passwordChangeHandler(e)}
                     required
                 />
-                <button type="submit">Log In</button>
+                <label>
+                    Email
+                </label>
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => emailChangeHandler(e)}
+                    required
+                />
+                <label>
+                    First Name
+                </label>
+                <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => firstNameChangeHandler(e)}
+                />
+                <label>
+                    Last Name
+                </label>
+                <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => lastNameChangeHandler(e)}
+                />
+                <label>
+                    Bio
+                </label>
+                <input
+                    type="text"
+                    value={bio}
+                    onChange={(e) => bioChangeHandler(e)}
+                />
+                <button type="submit">Register</button>
             </form>
         </div>
     )

@@ -41,24 +41,15 @@ module.exports = (sequelize, DataTypes) => {
 
     static async signup({ username, email, password, bio, profilePicture, firstName, lastName }) {
       const hashedPassword = bcrypt.hashSync(password);
+      console.log(hashedPassword)
       const user = await User.create({
         username,
         email,
-        hashedPassword,
+        hashedpassword: hashedPassword,
         bio,
         profilePicture,
         firstName,
         lastName
-      });
-      return await User.scope('currentUser').findByPk(user.id);
-    };
-
-    static async signup({ username, email, password }) {
-      const hashedPassword = bcrypt.hashSync(password);
-      const user = await User.create({
-        username,
-        email,
-        hashedPassword,
       });
       return await User.scope('currentUser').findByPk(user.id);
     };
@@ -93,7 +84,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       hashedpassword: {
-        type: DataTypes.STRING.BINARY,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           len: [60, 60],
