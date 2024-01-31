@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "blogId",
         onDelete: "CASCADE",
       });
+      Blog.hasMany(models.blogLike, {
+        foreignKey: "blogId",
+        onDelete: "CASCADE",
+      });
     }
   }
   Blog.init(
