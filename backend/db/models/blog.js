@@ -9,11 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Blog.belongsTo(models.User, { foreignKey: "ownerId" });
+      Blog.belongsTo(models.User, { foreignKey: "userId" });
       Blog.hasMany(models.Comment, {
         foreignKey: "blogId",
         onDelete: "CASCADE",
-        hooks: true,
       });
     }
   }
@@ -71,11 +70,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Blog",
-      defaultScope: {
-        attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
-      },
     }
   );
   return Blog;
