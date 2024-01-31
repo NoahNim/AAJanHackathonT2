@@ -11,36 +11,17 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-    options.tableName = 'Users';
+    options.tableName = 'Blogs';
     console.log(options)
     return queryInterface.bulkInsert(options, [
       {
-        username: 'CatDemo',
-        email: 'cat@user.io',
-        firstName: 'Meow',
-        lastName: 'Kittens',
-        hashedpassword: bcrypt.hashSync('password'),
+        title: 'This is my First Blog!',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        pictures: [],
+        tags: [],
         createdAt: new Date(),
         updatedAt: new Date(),
-      },
-      {
-        username: 'DogDemo',
-        email: 'dog@user.io',
-        firstName: 'Bark',
-        lastName: 'Puppies',
-        hashedpassword: bcrypt.hashSync('password2'),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+      }
     ], {});
   },
 
@@ -52,9 +33,9 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     const Op = Sequelize.Op;
-    options.tableName = 'Users';
+    options.tableName = 'Blogs';
     return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['CatDemo', 'DogDemo'] }
+      id: { [Op.in]: [1] }
     }, {});
   }
 };
