@@ -1,16 +1,16 @@
 'use strict';
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // Define your schema in options object
+  options.schema = process.env.SCHEMA;  
 }
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    options.tableName = 'Comments';  // Change the table name to Comments
+    options.tableName = 'Comments'; 
     await queryInterface.bulkInsert(options, [
       {
-        userId: 1,  // Assuming you have a user with ID 1
-        blogId: 1,  // Assuming you have a blog with ID 1
+        userId: 1,  
+        blogId: 1,  
         text: 'This is a great blog post!',
         createdAt: new Date(),
         updatedAt: new Date()
