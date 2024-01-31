@@ -49,6 +49,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
         onDelete: "CASCADE",
       });
+      User.belongsToMany(models.Comment, { through: 'commentLikes' });
+      User.belongsToMany(models.Blog, { through: 'blogLikes' });
+
     }
   }
   User.init(

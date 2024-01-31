@@ -8,11 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      blogLike.belongsTo(models.Blog, { foreignKey: 'blogId' });
+
     }
   }
-  blogLike.init(
-    {
+  blogLike.init({
       userId: DataTypes.INTEGER,
       blogId: DataTypes.INTEGER,
     },
