@@ -35,17 +35,21 @@ router.post(
 
         const token = await setTokenCookie(res, user);
 
+
         return res.json({
-            user,
+            user: user.toSafeObject(),
             token
         });
     }),
 );
 
+// 
+
 router.delete(
     '/',
     (_req, res) => {
         res.clearCookie('token');
+        res.clearCookie('user');
         return res.json({ message: 'success' });
     }
 );
@@ -60,8 +64,10 @@ router.get(
 
             const token = await setTokenCookie(res, user)
 
+            const safeUser = user.toSafeObject()
+
             return res.json({
-                user: user.toSafeObject(),
+                user: safeUser,
                 token: token,
             });
         } else return res.json({});

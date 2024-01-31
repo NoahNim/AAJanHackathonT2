@@ -1,37 +1,76 @@
-'use strict';
-/** @type {import('sequelize-cli').Migration} */
+"use strict";
 
 let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Blogs', {
+    await queryInterface.createTable("Blogs", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: { model: "Users", key: "id" },
+        allowNull: false,
+        onDelete: "CASCADE",
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(60),
+        allowNull: false,
       },
-      text: {
-        type: Sequelize.STRING
+      body: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      tags: {
+        type: Sequelize.ENUM(
+          "Personal",
+          "Lifestyle",
+          "Travel",
+          "Fashion",
+          "Food",
+          "Parenting",
+          "Fitness",
+          "Technology",
+          "Finance",
+          "DIY",
+          "Craft",
+          "Book",
+          "Movie",
+          "TV Review",
+          "Career",
+          "Professional Development",
+          "Environmental",
+          "Sustainability",
+          "Photography",
+          "Political",
+          "Social Commentary"
+        ),
+        allowNull: false,
+      },
+      thumbnail: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Blogs');
-  }
+    options.tableName = "Blogs";
+    await queryInterface.dropTable(options);
+  },
 };

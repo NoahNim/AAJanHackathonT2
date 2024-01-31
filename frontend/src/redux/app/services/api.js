@@ -8,10 +8,10 @@ export const api = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: '/',
         prepareHeaders: async (headers, endpoints) => {
-            const authToken = getCookie("XSRF-TOKEN")
+            const siteToken = getCookie("XSRF-TOKEN")
 
-            if (authToken) {
-                headers.set('XSRF-TOKEN', authToken);
+            if (siteToken) {
+                headers.set('XSRF-TOKEN', siteToken);
             }
 
             headers.set('Content-type', 'application/json')
@@ -30,36 +30,16 @@ export const api = createApi({
                 method: 'POST',
                 body: JSON.stringify(credentials)
             }),
-            transformResponse: (response, meta, arg) => response.data,
-            transformErrorResponse: (response, meta, arg) => response.status,
-            async onQueryStarted(
-                arg,
-                { dispatch, getState, queryFulfilled, requestId, extra, getCacheEntry }
-            ) { },
-            // The 2nd parameter is the destructured `MutationCacheLifecycleApi`
-            async onCacheEntryAdded(
-                arg,
-                {
-                    dispatch,
-                    getState,
-                    extra,
-                    requestId,
-                    cacheEntryRemoved,
-                    cacheDataLoaded,
-                    getCacheEntry,
-                }
-            ) { },
         }),
         // logout end point
         logout: builder.mutation({
             query: () => ({
                 url: '/api/user/',
-                method: "DELETE",
-                'XSRF-TOKEN': getCookie('XSRF-TOKEN')
+                method: 'DELETE',
             })
         }),
         // restore user
-        User: builder.query({
+        restoreUser: builder.query({
             query: () => ('/api/user/')
         }),
     })

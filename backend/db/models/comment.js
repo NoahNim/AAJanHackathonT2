@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Comment.belongsTo(models.User, { foreignKey: 'userId' })
       Comment.belongsTo(models.Blog, { foreignKey: 'blogId' })
+      Comment.hasMany(models.commentLike, { foreignKey: 'commentId', onDelete: 'CASCADE', hooks: true });
     }
   }
   Comment.init({
@@ -40,3 +41,5 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Comment;
 };
+
+
