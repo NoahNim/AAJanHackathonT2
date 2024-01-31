@@ -38,6 +38,13 @@ export const api = createApi({
                 method: 'DELETE',
             })
         }),
+        signup: builder.mutation({
+            query: (userInfo) => ({
+                url: '/api/user/sign-up',
+                method: 'POST',
+                body: JSON.stringify(userInfo)
+            })
+        }),
         // restore user
         restoreUser: builder.query({
             query: () => ('/api/user/')
@@ -46,4 +53,4 @@ export const api = createApi({
 })
 
 
-export const { useLoginMutation, useRestoreQuery, useLogoutMutation } = api;
+export const { useLoginMutation, useRestoreQuery, useLogoutMutation, useSignupMutation } = api;

@@ -78,6 +78,7 @@ router.post(
     '/sign-up',
     validateSignup,
     asyncHandler(async (req, res) => {
+        console.log("_csrf:" + req.csrfToken())
         let user;
         const { username, email, password, firstName, lastName, bio, profilePicture } = req.body
         user = await User.signup({ username, email, password, firstName, lastName, bio, profilePicture })
