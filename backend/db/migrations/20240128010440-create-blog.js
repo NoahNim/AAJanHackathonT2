@@ -25,7 +25,7 @@ module.exports = {
         type: Sequelize.STRING(60),
         allowNull: false,
       },
-      description: {
+      body: {
         type: Sequelize.TEXT,
         allowNull: false,
       },
@@ -55,8 +55,9 @@ module.exports = {
         ),
         allowNull: false,
       },
-      pictures: {
+      thumbnail: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

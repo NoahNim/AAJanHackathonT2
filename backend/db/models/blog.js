@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         allowNull: false,
       },
-      description: {
+      body: {
         type: DataTypes.TEXT,
         validate: {
           len: [5, 2000],
@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
         ),
         allowNull: false,
       },
-      pictures: {
+      thumbnail: {
         type: DataTypes.STRING,
         allowNull: false,
       },
