@@ -38,6 +38,23 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
+
+    static async signup({ username, email, password, bio, profilePicture, firstName, lastName }) {
+      const hashedPassword = bcrypt.hashSync(password);
+      console.log(email)
+      const user = await User.create({
+        username,
+        email,
+        hashedpassword: hashedPassword,
+        bio,
+        profilePicture,
+        firstName,
+        lastName
+      });
+      return await User.scope('currentUser').findByPk(user.id);
+    };
+
+
     static associate(models) {
       // define association here
       User.hasMany(models.Comment, {
@@ -67,12 +84,44 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       hashedpassword: {
-        type: DataTypes.STRING.BINARY,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           len: [60, 60],
         },
       },
+      bio: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          len: [0, 500]
+        }
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          len: [3, 256]
+        },
+      },
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          len: [0, 500]
+        }
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          len: [0, 500]
+        }
+      },
+      profilePicture: {
+        type: DataTypes.STRING,
+        allowNull: true
+      }
     },
     {
       sequelize,
