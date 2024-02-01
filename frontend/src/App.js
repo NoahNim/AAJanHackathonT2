@@ -9,6 +9,7 @@ import {
 import './App.css';
 import { Home } from './components/Home/Home';
 import { LoginForm } from './components/Auth/LoginForm';
+import { SignupForm } from './components/Auth/SignupForm';
 import { api } from './redux/app/services/api';
 import { store } from './redux/app/store';
 import { restoreUser } from './redux/features/auth/userSlice';
@@ -38,6 +39,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/user/login" element={<LoginForm />} />
           <Route path="/test" element={<Likes />} />
+          <Route path="/user/sign-up" element={<SignupForm />} />
         </Routes>
       </BrowserRouter>
     </div>
