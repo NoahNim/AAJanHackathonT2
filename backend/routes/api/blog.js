@@ -60,25 +60,57 @@ router.get("/:blogId", async (req, res, next) => {
 });
 
 // Create a blog
-router.post(
-  "/",
-  // requireAuth,
-  async (req, res, next) => {
-    const { title, body, thumbnail, tags } = req.body;
-    const userId = req.user.id;
-    console.log(userId);
+router.post("/", requireAuth, async (req, res, next) => {
+  const { title, body, thumbnail, tags } = req.body;
+  // const userId = req.user.id;
+  const { user } = req;
+  const userId = user.id;
+  // console.log(user.id, "hello");
 
-    const newBlog = await Blog.create({
-      title,
-      body,
-      tags,
-      thumbnail,
-      userId,
-    });
+  const newBlog = await Blog.create({
+    title,
+    body,
+    tags,
+    thumbnail,
+    userId,
+  });
 
-    res.status(201);
-    return res.json(newBlog);
+  res.status(201);
+  return res.json(newBlog);
+});
+
+// Edit a blog
+router.put("/:blogId", requireAuth, async (req, res, next) => {
+  let blogId = req.params.blogId;
+  const { title, body, thumbnail, tags } = req.body;
+  const { user } = req;
+
+  const requestBlog = await Blog.findByPk(blogId);
+
+  if (!requestBlog) {
+    const err = new Error("Blog not found");
+    err.status = 404;
+    err.title = "Blog not found";
+    err.errors = ["Blog could not be found"];
+    return next(err);
   }
-);
+
+  if (user.id == requestBlog.userId) {
+    requestBlog.title = title;
+    requestBlog.body = body;
+    requestBlog.tags = tags;
+    requestBlog.thumbnail = thumbnail;
+
+    requestBlog.save();
+
+    res.json(await requestBlog);
+  } else {
+    const err = new Error("Authorization error");
+    err.title = "Authorization error";
+    err.status = 403;
+    err.message = "User must be author of the blog";
+    return next(err);
+  }
+});
 
 module.exports = router;
