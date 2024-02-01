@@ -113,4 +113,33 @@ router.put("/:blogId", requireAuth, async (req, res, next) => {
   }
 });
 
+// Delete a blog
+router.delete("/:blogId", requireAuth, async (req, res, next) => {
+  const requestBlogId = req.params.blogId;
+  const blogToDelete = await Blog.findByPk(requestBlogId);
+
+  if (!blogToDelete) {
+    const err = new Error("Blog not found");
+    err.status = 404;
+    err.title = "Blog not found";
+    err.errors = ["Blog could not be found"];
+    return next(err);
+  }
+
+  let { user } = req;
+  if (user.id == blogToDelete.userId) {
+    await blogToDelete.destroy();
+    return res.json({
+      message: "Successfully deleted",
+      statusCode: 200,
+    });
+  } else {
+    const err = new Error("Authorization error");
+    err.title = "Authorization error";
+    err.status = 403;
+    err.message = "User must be author of the blog";
+    return next(err);
+  }
+});
+
 module.exports = router;
