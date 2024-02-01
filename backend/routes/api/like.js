@@ -3,16 +3,21 @@ const { check } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const { handleValidationErrors } = require("../../utils/validation");
 const { bloglike, commentlike } = require("../../db/models");
+const { requireAuth } = require("../../utils/auth");
 const router = express.Router();
 
-router.get('/blog', asyncHandler(async (req,res) => {
+router.get('/blog/:blogId', requireAuth, asyncHandler(async (req,res) => {
 
-    const res = bloglike.findOne({where:{userId, blogId}})
+    const { blogId } = req.params
+    const { user } = req
+
+    const res = bloglike.findOne({where:{userId: user.id, blogId}})
+
 
 }))
 
 // Like a blog
-router.post('/blog', asyncHandler(async (req, res) => {
+router.post('/blog', requireAuth, asyncHandler(async (req, res) => {
 
     const { userId, blogId } = req.body
 
@@ -26,7 +31,7 @@ router.post('/blog', asyncHandler(async (req, res) => {
 }))
 
 // Like a comment
-router.post('/comment', asyncHandler(async () => {
+router.post('/comment', requireAuth, asyncHandler(async () => {
 
     const { userId, commentId } = req.body
 
